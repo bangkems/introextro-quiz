@@ -1,9 +1,6 @@
 import streamlit as st
-import pandas as pd
-import plotly.graph_objects as go
 from PIL import Image, ImageDraw, ImageFont
 import io
-import base64
 
 # Set page config
 st.set_page_config(
@@ -151,22 +148,9 @@ def main():
         st.header("🎉 Your Results!")
         st.subheader(f"You are an {personality_type}!")
         
-        # Create and display gauge chart
-        fig = go.Figure(go.Indicator(
-            mode = "gauge+number",
-            value = score,
-            title = {'text': "Introvert-Extrovert Scale"},
-            gauge = {
-                'axis': {'range': [0, 100]},
-                'bar': {'color': "darkblue"},
-                'steps': [
-                    {'range': [0, 33], 'color': "lightgray"},
-                    {'range': [33, 66], 'color': "gray"},
-                    {'range': [66, 100], 'color': "darkgray"}
-                ]
-            }
-        ))
-        st.plotly_chart(fig)
+        # Create a simple progress bar instead of gauge chart
+        st.progress(score/100)
+        st.write(f"Your score: {score:.1f}%")
         
         # Create shareable image
         result_image = create_result_image(personality_type, score)
